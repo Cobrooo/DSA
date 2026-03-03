@@ -1,0 +1,99 @@
+class Solution {
+    public int[] findNGE(int arr[], int n) {
+        int ans[] = new int[n];
+        Deque<Integer> st = new ArrayDeque<>();
+        for(int i=n-1;i>=0;i--) {
+            while(!st.isEmpty() && arr[st.peek()] <= arr[i]) {
+                st.pop();
+            }
+            if(st.isEmpty()) {
+                ans[i] = n;
+            }
+            else {
+                ans[i] = st.peek();
+            }
+            st.push(i);
+        }
+        return ans;
+    }
+    public int[] findNSE(int arr[], int n) {
+        int ans[] = new int[n];
+        Deque<Integer> st = new ArrayDeque<>();
+        for(int i=n-1;i>=0;i--) {
+            while(!st.isEmpty() && arr[st.peek()] >= arr[i]) {
+                st.pop();
+            }
+            if(st.isEmpty()) {
+                ans[i] = n;
+            }
+            else {
+                ans[i] = st.peek();
+            }
+            st.push(i);
+        }
+        return ans;
+    }
+    public int[] findPSEE(int arr[], int n) {
+        int ans[] = new int[n];
+        Deque<Integer> st = new ArrayDeque<>();
+        for(int i=0;i<n;i++) {
+            while(!st.isEmpty() && arr[st.peek()] > arr[i]) {
+                st.pop();
+            }
+            if(st.isEmpty()) {
+                ans[i] = -1;
+            }
+            else {
+                ans[i] = st.peek();
+            }
+            st.push(i);
+        }
+        return ans;
+    }
+    public int[] findPGEE(int arr[], int n) {
+        int ans[] = new int[n];
+        Deque<Integer> st = new ArrayDeque<>();
+        for(int i=0;i<n;i++) {
+            while(!st.isEmpty() && arr[st.peek()] < arr[i]) {
+                st.pop();
+            }
+            if(st.isEmpty()) {
+                ans[i] = -1;
+            }
+            else {
+                ans[i] = st.peek();
+            }
+            st.push(i);
+        }
+        return ans;
+    }
+    public long subArrayMins(int arr[]) {
+        int n = arr.length;
+        int nse[] = findNSE(arr, n);
+        int psee[] = findPSEE(arr, n);
+        long sum = 0;
+        for(int i=0;i<n;i++) {
+            int l = i - psee[i];
+            int r = nse[i] - i;
+            long freq = l * r * 1L;
+            sum += (freq * arr[i]);
+        }
+        return sum;
+    }
+    public long subArrayMax(int arr[]) {
+        int n = arr.length;
+        int nge[] = findNGE(arr, n);
+        int pgee[] = findPGEE(arr, n);
+        long sum = 0;
+        for(int i=0;i<n;i++) {
+            int l = i - pgee[i];
+            int r = nge[i] - i;
+            long freq = l * r * 1L;
+            sum += (freq * arr[i]);
+        }
+        return sum;
+    }
+    public long subArrayRanges(int[] nums) {
+        return subArrayMax(nums) - subArrayMins(nums);
+    }
+}
