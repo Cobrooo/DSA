@@ -1,0 +1,50 @@
+// Only Function for Vertical Order Traversal of Binary Tree
+
+
+class Tuple {
+    Node node;
+    int x;
+    int y;
+    Tuple(Node node, int x, int y) {
+        this.node  = node;
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Solution {
+    public static List<List<Integer>> VOT(Node root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> tm = new TreeMap<>();
+        Deque<Tuple> q = new ArrayDeque<>();
+        q.add(new Tuple(root, 0, 0));
+        while(!q.isEmpty()) {
+            Tuple curr = q.poll();
+            Node node = curr.node;
+            int x = curr.x;
+            int y = curr.y;
+            if(!tm.containsKey(x)) {
+                mp.put(x, new TreeMap<>());
+            }
+            if(!tm.get(x).containsKey(y)) {
+                tm.get(x).put(y, new PriorityQueue<>());
+            }
+            mp.get(x).get(y).add(node.val);
+            if(node.left != null) {
+                q.add(new Tuple(node.left, x-1, y+1));
+            }
+            if(node.right != null) {
+                q.add(new Tuple(node.right, x+1, y+1));
+            }
+        }
+        for(TreeMap<Integer, PriorityQueue<Integer>> ys : tm.values()) {
+            ans.add(new ArrayList<>());
+            for(PriorityQueue<Integer> nodes : ys.values()) {
+                while(!nodes.isEmpty()) {
+                    ans.get(ans.size() - 1).add(nodes.poll());
+                }
+            }
+        }
+        return ans;
+    }
+}
