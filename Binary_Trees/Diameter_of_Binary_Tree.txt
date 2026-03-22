@@ -1,0 +1,18 @@
+// Only Function to find the Diameter of the BT
+
+class Solution {
+    int maxi = 0;
+    public static int helper(Node root) {
+        if(root == null) {
+            return 0;
+        }
+        int lh = helper(root.left);
+        int rh = helper(root.right);
+        maxi = Math.max(maxi, lh+rh);
+        return Math.max(lh, rh) + 1;
+    }
+    public static int diaOfBT(Node root) {
+        helper(root);
+        return maxi;
+    }
+}
