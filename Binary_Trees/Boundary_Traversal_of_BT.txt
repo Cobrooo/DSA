@@ -10,7 +10,9 @@ class Solution {
     public static void addLeftBoundary(Node root, List<Integer> res) {
         Node curr = root.left;
         while(curr != null) {
-            res.add(curr.val);
+            if(!isLeaf(curr)) {
+                res.add(curr.val);
+            }
             if(curr.left != null) {
                 curr = curr.left;
             }
@@ -23,7 +25,9 @@ class Solution {
         Node curr = root.right;
         List<Integer> temp = new ArrayList<>();
         while(curr != null) {
-            res.add(curr.val);
+            if(!isLeaf(curr)) {
+                res.add(curr.val);
+            }
             if(curr.right != null) {
                 curr = curr.right;
             }
