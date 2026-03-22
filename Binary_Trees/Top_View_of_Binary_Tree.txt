@@ -1,0 +1,37 @@
+// Only Function for the Top View of the Binary Tree
+
+
+class Pair {
+    int x;
+    Node node;
+    Pair(int x, Node node) {
+        this.x = x;
+        this.node = node;
+    }
+}
+class Solution {
+    public static List<Integer> topView(Node root) {
+        List<Integer> ans = new ArrayList<>();
+        TreeMap<Integer, Integer> tm = new TreeMap<>();
+        Deque<Pair> q = new ArrayDeque<>();
+        q.add(new Pair(0, root));
+        while(!q.isEmpty()) {
+            Pair curr = q.poll();
+            int x = curr.x;
+            Node node = curr.node;
+            if(!tm.containsKey(x)) {
+                tm.put(x, node.val);
+            }
+            if(node.left != null) {
+                q.add(new Pair(x-1, node.left));
+            }
+            if(node.right != null) {
+                q.add(new Pair(x+1, node.right));
+            }
+        }
+        for(int val : tm.values()) {
+            ans.add(val);
+        }
+        return ans;
+    }
+}
