@@ -1,0 +1,60 @@
+// Only Function for the Boundary Traversal of BT
+
+class Solution {
+    public static boolean isLeaf(Node root) {
+        if(root.left == null && root.right == null) {
+            return true;
+        }
+        return false;
+    }
+    public static void addLeftBoundary(Node root, List<Integer> res) {
+        Node curr = root.left;
+        while(curr != null) {
+            res.add(curr.val);
+            if(curr.left != null) {
+                curr = curr.left;
+            }
+            else {
+                curr = curr.right;
+            }
+        }
+    }
+    public static void addRightBoundary(Node root, List<Integer> res) {
+        Node curr = root.right;
+        List<Integer> temp = new ArrayList<>();
+        while(curr != null) {
+            res.add(curr.val);
+            if(curr.right != null) {
+                curr = curr.right;
+            }
+            else {
+                curr = curr.left;
+            }
+        }
+        for(int i=temp.size()-1;i>=0;i--) {
+            res.add(temp.get(i));
+        }
+    }
+    public static void addLeafNode(Node root, List<Integer> res) {
+        if(isLeaf(root)) {
+            res.add(root.val);
+            return;
+        }
+        if(root.left != null) {
+            addLeafNode(root.left, res);
+        }
+        if(root.right != null) {
+            addLeafNode(root.right, res);
+        }
+    }
+    public static List<Integer> boundaryTraversal(Node root) {
+        List<Integer> ans = new ArrayList<>();
+        if(isLeaf(root) == false) {
+            ans.add(root.val);
+        }
+        addLeftBoundary(root, ans);
+        addLeadNode(root, ans);
+        addRightBoundary(root, ans);
+        return ans;
+    }
+}
