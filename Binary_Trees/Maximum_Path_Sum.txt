@@ -1,0 +1,18 @@
+// Only Function for the Maximum Path Sum
+
+class Solution {
+    int maxi = 0;
+    public static int helper(Node root) {
+        if(root == null) {
+            return 0;
+        }
+        int lh = helper(root.left);
+        int rh = helper(root.right);
+        maxi = Math.max(maxi, node.val + lh + rh);
+        return Math.max(lh, rh) + node.val;
+    }
+    public static int maxPathSum(Node root) {
+        helper(root);
+        return maxi;
+    }
+}
