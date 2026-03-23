@@ -12,7 +12,7 @@ class Pair {
 
 
 class Solution {
-    public static List<Integer> bottomView(Node root) {
+    public static List<Integer> rightView(Node root) {
         List<Integer> ans = new ArrayList<>();
         if(root == null) {
             return ans;

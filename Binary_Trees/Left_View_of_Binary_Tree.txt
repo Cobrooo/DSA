@@ -1,0 +1,37 @@
+// Only Function for the Left View of the Binary Tree
+
+
+class Pair {
+    int y;
+    Node node;
+    Pair(int y, Node node) {
+        this.y = y;
+        this.node = node;
+    }
+}
+class Solution {
+    public static List<Integer> leftView(Node root) {
+        List<Integer> ans = new ArrayList<>();
+        TreeMap<Integer, Integer> tm = new TreeMap<>();
+        Deque<Pair> q = new ArrayDeque<>();
+        q.add(new Pair(0, root));
+        while(!q.isEmpty()) {
+            Pair curr = q.poll();
+            int y = curr.y;
+            Node node = curr.node;
+            if(!tm.containsKey(y)) {
+                tm.put(y, node.val);
+            }
+            if(node.left != null) {
+                q.add(new Pair(y+1, node.left));
+            }
+            if(node.right != null) {
+                q.add(new Pair(y+1, node.right));
+            }
+        }
+        for(int val : tm.values()) {
+            ans.add(val);
+        }
+        return ans;
+    }
+}
