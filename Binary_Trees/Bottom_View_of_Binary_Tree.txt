@@ -1,0 +1,40 @@
+// Only Function for the Bottom View of Binary Tree
+
+
+class Pair {
+    Node node;
+    int x;
+    Pair(Node node, int x) {
+        this.node = node;
+        this.x = x;
+    }
+}
+
+
+class Solution {
+    public static List<Integer> bottomView(Node root) {
+        List<Integer> ans = new ArrayList<>();
+        if(root == null) {
+            return ans;
+        }
+        Deque<Pair> q = new ArrayDeque<>();
+        TreeMap<Integer, Integer> tm = new TreeMap<>();
+        q.add(new Pair(root, 0));
+        while(!q.isEmpty()) {
+            Pair curr = q.poll();
+            Node node = curr.node;
+            int x = curr.x;
+            tm.put(x, node.val);
+            if(node.left != null) {
+                q.add(new Pair(node.left, x-1));
+            }
+            if(node.right != null) {
+                q.add(new Pair(node.right, x+1));
+            }
+        }
+        for(int val : tm.values()) {
+            ans.add(val);
+        }
+        return ans;
+    }
+}
