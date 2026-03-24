@@ -1,0 +1,27 @@
+// Only Function to print the Path from Root to given node in Binary Tree
+
+
+class Solution {
+    public static boolean getPath(Node root, List<Integer> ans, int target) {
+        if(root == null) {
+            return false;
+        }
+        ans.add(root.val);
+        if(root.val == target) {
+            return true;
+        }
+        if(getPath(root.left, ans, target) || getPath(root.right, ans, target)) {
+            return true;
+        }
+        ans.remove(ans.size() - 1);
+        return false;
+    }
+    public static List<Integer> rootToNode(Node root, int target) {
+        List<Integer> ans = new ArrayList<>();
+        if(root == null) {
+            return ans;
+        }
+        getPath(root, ans);
+        return ans;
+    }
+}
