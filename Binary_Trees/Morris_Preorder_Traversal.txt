@@ -1,0 +1,32 @@
+// Only function to print the preorder traversal with O(1) space complexity
+
+
+
+class Solution {
+    public static List<Integer> getPreorder(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        TreeNode curr = root;
+        while(curr != null) {
+            if(curr.left == null) {
+                ans.add(curr.val);
+                curr = curr.right;
+            }
+            else {
+                TreeNode rightMost = curr;
+                while(rightMost.right != null && rightMost.right != curr) {
+                    rightMost = rightMost.right;
+                }
+                if(rightMost.right == null) {
+                    rightMost.right = curr;
+                    ans.add(curr.val);
+                    curr = curr.left;
+                }
+                else {
+                    rightMost.right = null;
+                    curr = curr.right;
+                }
+            }
+        }
+        return ans;;
+    }
+}
