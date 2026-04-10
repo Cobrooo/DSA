@@ -1,0 +1,33 @@
+// Only Function to count the nodes int the complete binary tree
+
+
+
+class Solution {
+    public int countNodes(TreeNode root) {
+        if(root == null) {
+            return 0;
+        }
+        int lh = getLeftHeight(root);
+        int rh = getRightHeight(root);
+        if(lh == rh) {
+            return ((1 << lh) - 1);
+        }
+        return countNodes(root.left) + countNodes(root.right) + 1;
+    }
+    public int getLeftHeight(TreeNode root) {
+        int cnt = 0;
+        while(root != null) {
+            cnt++;
+            root = root.left;
+        }
+        return cnt;
+    }
+    public int getRightHeight(TreeNode root) {
+        int cnt = 0;
+        while(root != null) {
+            cnt++;
+            root = root.right;
+        }
+        return cnt;
+    }
+}
