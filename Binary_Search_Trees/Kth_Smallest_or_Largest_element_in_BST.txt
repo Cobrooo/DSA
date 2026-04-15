@@ -1,0 +1,23 @@
+// Only function for finding Kth Smallest or Largest element in Binary Search Tree
+
+
+
+
+class Solution {
+    public static void traverse(TreeNode root, List<Integer> al) {
+        if(root == null) {
+            return;
+        }
+        traverse(root.left, al);
+        al.add(root.val);
+        traverse(root.right, al);
+    }
+    public static int KthlargestOrSmallest(TreeNode root, int k) {
+        List<Integer> al = new ArrayList<>();
+        traverse(root, al);
+        return al.get(k-1);
+    }
+}
+
+
+// You can also use Morris Traversal by using Counters in it
