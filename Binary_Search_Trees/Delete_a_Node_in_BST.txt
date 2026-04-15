@@ -1,0 +1,57 @@
+// Onlt function for deleting a node in Binary Search tree
+
+
+
+
+class Solution {
+    public static TreeNode helper(TreeNode root) {
+        if(root.left == null) {
+            return root.right;
+        }
+        else if(root.right == null) {
+            return root.left;
+        }
+        else {
+            TreeNode rightChild = root.right;
+            TreeNode leftRightMost = getRightMost(root.left);
+            leftRightMost.right = rightChild;
+            return root.left;
+        }
+    }
+    public static TreeNode getRightMost(TreeNode root) {
+        if(root.right == null) {
+            return root;
+        }
+        return getRightMost(root.right);
+    }
+    public static TreeNode deleteNode(TreeNode root, int val) {
+        if(root == null) {
+            return null;
+        }
+        if(root.val == val) {
+            return helper(root);
+        }
+        TreeNode dummy = root;
+        while(root != null) {
+            if(root.val > val) {
+                if(root.left != null && root.left.val == val) {
+                    root.left = helper(root.left);
+                    break;
+                }
+                else {
+                    root = root.left;
+                }
+            }
+            else {
+                if(root.right != null && root.right.val == val) {
+                    root.right = helper(root.right);
+                    break;
+                }
+                else {
+                    root = root.right;
+                }
+            }
+        }
+        return dummy;
+    }
+}
