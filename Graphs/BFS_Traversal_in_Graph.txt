@@ -1,0 +1,51 @@
+// Code for the BFS Traversal in Graph
+
+
+
+
+import java.util.*;
+class Main {
+    public static List<Integer> BFS(List<List<Integer>> graph, int vis[], int node) {
+        List<Integer> ans = new ArrayList<>();
+        Queue<Integer> q = new LinkedList<>();
+        q.add(node);
+        vis[node] = 1;
+        while(!q.isEmpty()) {
+            int curr = q.poll();
+            for(int i=0;i<graph.get(curr).size();i++) {
+                int val = graph.get(curr).get(i);
+                if(vis[val] == 0) {
+                    q.add(val);
+                    vis[val] = 1;
+                }
+            }
+            ans.add(curr);
+        }
+        return ans;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        // int graph[][] = new int[n+1][n+1];
+        // for(int i=0;i<m;i++) {
+        //     int u = sc.nextInt();
+        //     int v = sc.nextInt();
+        //     graph[u][v] = 1;
+        //     graph[v][u] = 1;
+        // }
+        List<List<Integer>> graph = new ArrayList<>();
+        for(int i=0;i<=n;i++) {
+            graph.add(new ArrayList<>());
+        }
+        for(int i=0;i<m;i++) {
+            int u = sc.nextInt();
+            int v = sc.nextInt();
+            graph.get(u).add(v);
+            graph.get(v).add(u);
+        }
+        int vis[] = new int[n+1];
+        System.out.println(BFS(graph, vis, 1));
+        sc.close();
+    }
+}
