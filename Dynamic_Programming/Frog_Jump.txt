@@ -47,6 +47,22 @@ class Main {
         }
         return dp[n-1];
     }
+    // Tabulation with Space Optimization
+    public static int jump(int n, int arr[]) {
+        int prev = 0;
+        int prev2 = 0;
+        for(int i=1;i<n;i++) {
+            int left = prev + Math.abs(arr[i] - arr[i-1]);
+            int right = Integer.MAX_VALUE;
+            if(i > 1) {
+                right = prev2 + Math.abs(arr[i] - arr[i-2]);
+            }
+            int curr = Math.min(left, right);
+            prev2 = prev;
+            prev = curr;
+        }
+        return prev;
+    }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
