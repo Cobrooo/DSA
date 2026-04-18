@@ -1,0 +1,33 @@
+// Program for Fibonacci Number using Memoization and Tabulation
+
+
+
+
+import java.util.*;
+class Main {
+    public static int fib(int n, int memo[]) {
+        if(memo[n] != -1) {
+            return memo[n];
+        }
+        memo[n] = fib(n-1, memo) + fib(n-2, memo);
+        return memo[n];
+    }
+    public static int fib(int n, int tabu[]) {
+        tabu[0] = 0;
+        tabu[1] = 1;
+        for(int i=2;i<=n;i++) {
+            tabu[i] = tabu[i-1] + tabu[i-2];
+        }
+        return tabu[n];
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int memo[] = new int[n+1];
+        Arrays.fill(memo, -1);
+        // memo[0] = 0;
+        // memo[1] = 1;
+        System.out.println(fib(n, memo));
+        sc.close();
+    }
+}
