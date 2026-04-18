@@ -1,0 +1,41 @@
+// Code for the DFS Traversal in Graphs
+
+
+
+
+
+
+import java.util.*;
+class Main {
+    public static void DFS(List<List<Integer>> graph, List<Integer> ans, boolean visited[], int start) {
+        visited[start] = true;
+        ans.add(start);
+        for(int i=0;i<graph.get(start).size();i++) {
+            int val = graph.get(start).get(i);
+            if(!visited[val]) {
+                DFS(graph, ans, visited, val);
+            }
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int e = sc.nextInt();
+        List<List<Integer>> graph = new ArrayList<>();
+        for(int i=0;i<=n;i++) {
+            graph.add(new ArrayList<>());
+        }
+        for(int i=0;i<e;i++) {
+            int u = sc.nextInt();
+            int v = sc.nextInt();
+            graph.get(u).add(v);
+            graph.get(v).add(u);
+        }
+        boolean visited[] = new boolean[n+1];
+        List<Integer> ans = new ArrayList<>();
+        int start = 1;
+        DFS(graph, ans, visited, start);
+        System.out.println(ans);
+        sc.close();
+    }
+}
