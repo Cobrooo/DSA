@@ -1,0 +1,58 @@
+// Code for the Climbing Stairs Problem
+
+
+
+
+
+import java.util.*;
+class Main {
+    //Recursion
+    public static int climb(int n) {
+        if(n <= 1) {
+            return 1;
+        }
+        return climb(n-1) + climb(n-2);
+    }
+    // Memoization
+    public static int climb(int n, int memo[]) {
+        if(n <= 1) {
+            return 1;
+        }
+        if(memo[n] != -1) {
+            return memo[n];
+        }
+        memo[n] = climb(n-1, memo) + climb(n-2, memo);
+        return memo[n];
+    }
+    // Tabulation
+    public static int climb(int n, int tabu[]) {
+        tabu[0] = 1;
+        tabu[1] = 1;
+        for(int i=2;i<=n;i++) {
+            tabu[i] = tabu[i-1] + tabu[i-2];
+        }
+        return tabu[n];
+    }
+    // Tabulation with Space Optimization
+    public static int climb(int n) {
+        if(n <= 1) {
+            return 1;
+        }
+        int prev2 = 1;
+        int prev = 1;
+        for(int i=2;i<=n;i++) {
+            int curr = prev2 + prev;
+            prev2 = prev;
+            prev = curr;
+        }
+        return prev;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int memo[] = new int[n+1];
+        // Arrays.fill(memo, -1);
+        System.out.println(climb(n));
+        sc.close();
+    }
+}
