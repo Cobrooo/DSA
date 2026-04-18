@@ -1,0 +1,65 @@
+// Program for the Frog Jump Problem using DP
+
+
+
+
+
+import java.util.*;
+class Main {
+    // Recursive
+    public static int jump(int i, int arr[]) {
+        if(i == 0) {
+            return 0;
+        }
+        int left = climb(i-1, arr) + Math.abs(arr[i] - arr[i-1]);
+        int right = Integer.MAX_VALUE;
+        if(i > 1) {
+            right = climb(i-2, arr) + Math.abs(arr[i] - arr[i-2]);
+        }
+        return Math.min(left, right);
+    }
+    // Memoization
+    public static int jump(int i, int arr[], int dp[]) {
+        if(i == 0) {
+            return 0;
+        }
+        if(dp[i] != -1) {
+            return dp[i];
+        }
+        int left = jump(i-1, arr, dp) + Math.abs(arr[i] - arr[i-1]);
+        int right = Integer.MAX_VALUE;
+        if(i > 1) {
+            right = jump(i-2, arr, dp) + Math.abs(arr[i] - arr[i-2]);
+        }
+        dp[i] = Math.min(left, right);
+        return dp[i];
+    }
+    // Tabulation
+    public static int jump(int n, int arr[], int dp[]) {
+        dp[0] = 0;
+        for(int i=1;i<n;i++) {
+            int left = dp[i-1] + Math.abs(arr[i] - arr[i-1]);
+            int right = Integer.MAX_VALUE;
+            if(i > 1) {
+                right = dp[i-2] + Math.abs(arr[i] - arr[i-2]);
+            }
+            dp[i] = Math.min(left, right);
+        }
+        return dp[n-1];
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i<n;i++) {
+            arr[i] = sc.nextInt();
+        }
+        int dp[] = new int[n];
+        // Arrays.fill(dp, -1);
+        System.out.println(jump(n, arr, dp));
+        // for(int i=0;i<n;i++) {
+        //     System.out.print(dp[i] + " ");
+        // }
+        sc.close();
+    }
+}
