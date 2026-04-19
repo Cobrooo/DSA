@@ -1,0 +1,27 @@
+// Only function for the Flood fill algorithm
+
+
+
+
+class Solution {
+    public void dfs(int sr, int sc, int image[][], int initial, int color) {
+        if(sr < 0 || sc < 0 || sr >= image.length || sc >= image[0].length || image[sr][sc] != initial) {
+            return;
+        }
+        image[sr][sc] = color;
+        dfs(sr+1, sc, image, initial, color);
+        dfs(sr, sc+1, image, initial, color);
+        dfs(sr-1, sc, image, initial, color);
+        dfs(sr, sc-1, image, initial, color);
+    }
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        int m = image.length;
+        int n = image[0].length;
+        int initial = image[sr][sc];
+        if(initial == color) {
+            return image;
+        }
+        dfs(sr, sc, image, initial, color);
+        return image;
+    }
+}
