@@ -1,0 +1,27 @@
+// Only function for finding number of provinces for a given graph
+
+
+
+
+class Solution {
+    public void dfs(int isConnected[][], boolean visited[], int start) {
+        visited[start] = true;
+        for(int i=0;i<isConnected.length;i++) {
+            if(isConnected[start][i] == 1  && !visited[i]) {
+                dfs(isConnected, visited, i);
+            }
+        }
+    }
+    public int findCircleNum(int[][] isConnected) {
+        int v = isConnected.length;
+        boolean visited[] = new boolean[v];
+        int cnt = 0;
+        for(int i=0;i<v;i++) {
+            if(!visited[i]) {
+                cnt++;
+                dfs(isConnected, visited, i);
+            }
+        }
+        return cnt;
+    }
+}
