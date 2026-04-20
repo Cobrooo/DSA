@@ -1,0 +1,82 @@
+// Code for the House Robber 1 Problem
+
+
+
+
+
+import java.util.*;
+class Main {
+    // Recursion
+    public static int subSequence(int i, int arr[]) {
+        if(i == 0) {
+            return arr[i];
+        }
+        if(i < 0) {
+            return 0;
+        }
+        int pick = arr[i] + subSequence(i-2, arr);
+        int notpick = 0 + subSequence(i-1, arr);
+        return Math.max(pick, notpick);
+    }
+    // Memoization
+    public static int subSequence(int i, int arr[], int dp[]) {
+        if(i == 0) {
+            return arr[i];
+        }
+        if(i < 0) {
+            return 0;
+        }
+        if(dp[i] != -1) {
+            return dp[i];
+        }
+        int pick = arr[i] + subSequence(i-2, arr, dp);
+        int notpick = 0 + subSequence(i-1, arr, dp);
+        dp[i] = Math.max(pick, notpick);
+        return dp[i];
+    }
+    // Tabulation
+    public static int subSequence(int arr[], int dp[]) {
+        dp[0] = arr[0];
+        int neg = 0;
+        for(int i=1;i<arr.length;i++) {
+            int pick = arr[i];
+            if(i > 1) {
+                pick += dp[i-2];
+            }
+            int notpick = 0 + dp[i-1];
+            dp[i] = Math.max(pick, notpick);
+        }
+        return dp[arr.length-1];
+    }
+    // Tabulation with Space Optimization
+    public static int subSequence(int arr[], int dp[]) {
+        int prev = arr[0];
+        int neg = 0;
+        for(int i=1;i<arr.length;i++) {
+            int pick = arr[i];
+            if(i > 1) {
+                pick += neg;
+            }
+            int notpick = 0 + prev;
+            int curr = Math.max(pick, notpick);
+            neg = prev;
+            prev = curr;
+        }
+        return prev;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i<n;i++) {
+            arr[i] = sc.nextInt();
+        }
+        int dp[] = new int[n];
+        Arrays.fill(dp, -1);
+        System.out.println(subSequence(n-1, arr, dp));
+        for(int i=0;i<n;i++) {
+            System.out.println(dp[i] + " ");
+        }
+        sc.close();
+    }
+}
