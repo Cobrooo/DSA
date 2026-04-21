@@ -1,0 +1,59 @@
+// Code to Detect a Cycle in an Undirected Graph using DFS Traversal
+
+
+
+
+
+
+import java.util.*;
+class Main {
+    public static boolean cycleDFS(List<List<Integer>>graph, boolean visited[], int start, int parent) {
+        visited[start] = true;
+        for(int i=0;i<graph.get(start).size();i++) {
+            int val = graph.get(start).get(i);
+            if(!visited[val]) {
+                if(cycleDFS(graph, visited, val, start)) {
+                    return true;
+                }
+                else if(val != parent) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int e = sc.nextInt();
+        List<List<Integer>> graph = new ArrayList<>();
+        for(int i=0;i<=n;i++) {
+            graph.add(new ArrayList<>());
+        }
+        for(int i=0;i<e;i++) {
+            int u = sc.nextInt();
+            int v = sc.nextInt();
+            graph.get(u).add(v);
+            graph.get(v).add(u);
+        }
+        boolean visited[] = new boolean[n+1];
+        for(int i=0;i<=n;i++) {
+            if(!visited[i]) {
+                if(cycleDFS(graph, visited, i, -1)) {
+                    System.out.println(true);
+                    return;
+                }
+            }
+        }
+        System.out.println(false);
+        sc.close();
+    }
+}
+class Pair {
+    int node;
+    int parent;
+    Pair(int node, int parent) {
+        this.node = node;
+        this.parent = parent;
+    }
+}
