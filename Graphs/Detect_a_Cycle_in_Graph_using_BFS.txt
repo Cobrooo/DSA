@@ -15,10 +15,10 @@ class Main {
             Pair curr = q.poll();
             int node = curr.node;
             int parent = curr.parent;
-            for(int i=0;i<graph.get(curr).size();i++) {
-                int val = graph.get(curr).get(i);
+            for(int i=0;i<graph.get(node).size();i++) {
+                int val = graph.get(node).get(i);
                 if(!visited[val]) {
-                    q.add(new Pair(val, parent));
+                    q.add(new Pair(val, node));
                     visited[val] = true;
                 }
                 else if(parent != val) {
