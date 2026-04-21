@@ -9,18 +9,20 @@ import java.util.*;
 class Main {
     public static boolean cycleBFS(List<List<Integer>> graph, boolean visited[], int start) {
         Deque<Integer> q = new ArrayDeque<>();
-        q.add(start);
+        q.add(new Pair(start, -1));
         visited[start] = true;
         while(!q.isEmpty()) {
-            int curr = q.poll();
+            Pair curr = q.poll();
+            int node = curr.node;
+            int parent = curr.parent;
             for(int i=0;i<graph.get(curr).size();i++) {
                 int val = graph.get(curr).get(i);
-                if(q.contains(val) && visited[val]) {
-                    return true;
-                }
                 if(!visited[val]) {
-                    q.add(val);
+                    q.add(new Pair(val, parent));
                     visited[val] = true;
+                }
+                else if(parent != val) {
+                    return true;
                 }
             }
         }
@@ -43,5 +45,13 @@ class Main {
         boolean visited[] = new boolean[n+1];
         System.out.println(cycleBFS(graph, visited, 1));
         sc.close();
+    }
+}
+class Pair {
+    int node;
+    int parent;
+    Pair(int node, int parent) {
+        this.node = node;
+        this.parent = parent;
     }
 }
