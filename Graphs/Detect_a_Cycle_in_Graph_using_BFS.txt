@@ -8,7 +8,7 @@
 import java.util.*;
 class Main {
     public static boolean cycleBFS(List<List<Integer>> graph, boolean visited[], int start) {
-        Deque<Integer> q = new ArrayDeque<>();
+        Deque<Pair> q = new ArrayDeque<>();
         q.add(new Pair(start, -1));
         visited[start] = true;
         while(!q.isEmpty()) {
