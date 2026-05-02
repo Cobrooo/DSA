@@ -1,0 +1,64 @@
+// Code for the SubSets with Sum K using DP
+
+
+
+
+
+
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    // Recursion
+    public static boolean subSet(int i, int k, int arr[]) {
+        if(k == 0) {
+            return true;
+        }
+        if(i == arr.length || k < 0) {
+            return false;
+        }
+        boolean take = 
+        return subSet(i+1, k-arr[i], arr) || subSet(i+1, k, arr);
+    }
+    // Memoization
+    public static boolean subSet(int i, int k, int arr[], int dp[][]) {
+        if(k == 0) {
+            return true;
+        }
+        if(i == arr.length || k < 0) {
+            return false;
+        }
+        if(dp[i][k] != -1) {
+            return dp[i][k] == 1;
+        }
+        boolean take = subSet(i+1, k-arr[i], arr, dp);
+        boolean notTake = subSet(i+1, k, arr, dp);
+        dp[i][k] = (take || notTake) ? 1 : 0;
+        return dp[i][k] == 1;
+    }
+    // Tabulation
+    public static boolean subSet(int arr[], boolean dp[][], int k) {
+        int n = dp.length;
+        int m = dp[0].length;
+        for(int i=0;i<n;i++) {
+            dp[i][0] = true;
+        }
+        if(arr[0] <= k) {
+            dp[0][arr[0]] = true;
+        }
+        for(int i=1;i<n;i++) {
+            for(int t=1;t<=k;t++) {
+                boolean notTake = dp[i-1][t];
+                boolean take = false;
+                if(arr[i] <= t) {
+                    take = dp[i-1][t-arr[i]];
+                }
+                dp[i][t] = take || notTake;
+            }
+        }
+        return dp[n-1][k];
+    }
+    public static boolean subsetSumToK(int n, int k, int arr[]){
+        boolean dp[][] = new boolean[n][k+1];
+        return subSet(arr, dp, k);
+    }
+}
