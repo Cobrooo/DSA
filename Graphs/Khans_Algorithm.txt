@@ -1,0 +1,54 @@
+// Code for Kahn's Algorithm for Topological Sorting
+
+
+
+
+
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static ArrayList<Integer> kahnsAlgo(List<List<Integer>> g) {
+        int v = g.size();
+        int inDeg[] = new int[v];
+        for(int i=0;i<v;i++) {
+            for(int j=0;j<g.get(i).size();j++) {
+                int val = g.get(i).get(j);
+                inDeg[val]++;
+            }
+        }
+        Deque<Integer> q = new ArrayDeque<>();
+        for(int i=0;i<v;i++) {
+            if(inDeg[i] == 0) {
+                q.add(i);
+            }
+        }
+        ArrayList<Integer> ans = new ArrayList<>();
+        while(!q.isEmpty()) {
+            int curr = q.poll();
+            ans.add(curr);
+            for(int i=0;i<g.get(curr).size();i++) {
+                int val = g.get(curr).get(i);
+                inDeg[val]--;
+                if(inDeg[val] == 0) {
+                    q.add(val);
+                }
+            }
+        }
+        return ans;
+    }
+    public static ArrayList<Integer> topologicalSort(ArrayList<ArrayList<Integer>> edges, int v, int e) 
+    {
+        List<List<Integer>> g = new ArrayList<>();
+        for(int i=0;i<v;i++) {
+            g.add(new ArrayList<>());
+        }
+        // int e = edges.length;
+        for(int i=0;i<e;i++) {
+            int s = edges.get(i).get(0);
+            int d = edges.get(i).get(1);
+            g.get(s).add(d);
+        }
+        return kahnsAlgo(g);
+        
+    }
+}
