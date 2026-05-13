@@ -1,0 +1,50 @@
+// Code for the Bipartite Graph using DFS Algorithm
+
+
+
+
+
+import java.util.*;
+class Main {
+    public static boolean dfs(List<List<Integer>> g, int node, int col, int color[]) {
+        color[node] = col;
+        for(int val : g.get(node)) {
+            if(color[val] == -1) {
+                if(dfs(g, val, 1 - col, color) == false) {
+                    return false;
+                }
+                else if(color[val] == col) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public static boolean isBipartite(List<List<Integer>> g, int color[]) {
+        for(int i=0;i<color.length;i++) {
+            if(color[i] == -1) {
+                if(dfs(g, i, 0, color) == false) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public static void main(String[] args) {
+        List<List<Integer>> g = new ArrayList<>();
+        for(int i=0;i<4;i++) {
+            g.add(new ArrayList<>());
+        }
+        g.get(0).add(2);
+        g.get(2).add(0);
+        g.get(0).add(3);
+        g.get(3).add(0);
+        g.get(1).add(3);
+        g.get(3).add(1);
+        g.get(2).add(3);
+        g.get(3).add(2);
+        int color[] = new int[4];
+        Arrays.fill(color, -1);
+        System.out.println(isBipartite(g, color));
+    }
+}
